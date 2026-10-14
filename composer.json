@@ -1,0 +1,6 @@
+{
+    "name": "siteseeing/manila-tourism",
+    "description": "SITEseeing PHP/MySQL backend with optional SMTP email",
+    "type": "project",
+    "require": { "php": ">=8.0", "ext-pdo": "*", "ext-pdo_mysql": "*", "phpmailer/phpmailer": "^7.0" }
+}

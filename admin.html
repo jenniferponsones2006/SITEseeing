@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SITEseeing | Admin reservations</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <p id="adminLoading" class="loading-message" role="status">Checking admin access…</p>
+    <div id="adminApp" hidden>
+        <header class="admin-topbar">
+            <a class="admin-brand" href="index.html"><img src="SITEseeing-Logo.png" alt=""><span>SITEseeing<small>Explore Manila with SITEseeing</small></span></a>
+            <button id="sidebarToggle" class="icon-button" type="button" aria-label="Toggle admin navigation" aria-controls="adminSidebar" aria-expanded="false">☰</button>
+            <div class="admin-user"><span class="user-avatar" aria-hidden="true">A</span><span id="signedInName">Admin</span></div>
+        </header>
+        <div class="admin-layout">
+            <aside class="admin-sidebar" id="adminSidebar">
+                <nav aria-label="Admin navigation">
+                    <button class="sidebar-link" data-panel="reservations" type="button"><span aria-hidden="true">⌂</span> Dashboard</button>
+                    <a class="sidebar-link" href="index.html#places"><span aria-hidden="true">◇</span> Tourist Places</a>
+                    <a class="sidebar-link" href="index.html#packages"><span aria-hidden="true">▣</span> Tour Packages</a>
+                    <button class="sidebar-link active" data-panel="reservations" type="button"><span aria-hidden="true">▦</span> Reservations</button>
+                    <button class="sidebar-link" data-panel="people" type="button"><span aria-hidden="true">♙</span> People List</button>
+                    <button class="sidebar-link" data-panel="settings" type="button"><span aria-hidden="true">⚙</span> Settings</button>
+                    <div class="sidebar-divider"></div>
+                    <button class="sidebar-link" id="adminLogout" type="button"><span aria-hidden="true">↪</span> Logout</button>
+                </nav>
+                <div class="sidebar-art"><p>Explore<br>Manila</p></div>
+            </aside>
+            <main class="admin-main">
+                <p class="admin-message" id="adminMessage" role="status" aria-live="polite"></p>
+                <p id="defaultPasswordNotice" class="password-notice" hidden>Change the initial admin password in Settings before sharing this server.</p>
+                <section id="reservationsPanel">
+                    <div class="page-heading"><div><h1>Reserve People List</h1><p>View and manage all reservation records from customers.</p></div>
+                        <form id="bookingSearchForm" class="search-controls">
+                            <label class="sr-only" for="bookingSearch">Search reservations</label>
+                            <input id="bookingSearch" type="search" placeholder="Search by name, email, destination, or reference no…">
+                            <label class="sr-only" for="statusFilter">Reservation status</label>
+                            <select id="statusFilter"><option value="all">All statuses</option><option>Confirmed</option><option>Pending</option><option>Cancelled</option></select>
+                            <button class="button button-gold" type="submit">Filter</button>
+                        </form>
+                    </div>
+                    <div class="summary-grid" aria-label="Reservation totals">
+                        <article class="summary-card total"><span class="summary-icon" aria-hidden="true">♙</span><div><h2>Total Reservations</h2><strong id="totalReservations">0</strong></div></article>
+                        <article class="summary-card confirmed"><span class="summary-icon" aria-hidden="true">✓</span><div><h2>Confirmed</h2><strong id="confirmedReservations">0</strong></div></article>
+                        <article class="summary-card pending"><span class="summary-icon" aria-hidden="true">◷</span><div><h2>Pending</h2><strong id="pendingReservations">0</strong></div></article>
+                        <article class="summary-card cancelled"><span class="summary-icon" aria-hidden="true">×</span><div><h2>Cancelled</h2><strong id="cancelledReservations">0</strong></div></article>
+                    </div>
+                    <div class="table-wrap"><table><caption class="sr-only">Customer reservation records</caption>
+                        <thead><tr><th scope="col">#</th><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Package / Destination</th><th scope="col">Date of Visit</th><th scope="col">Group Size</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+                        <tbody id="bookingRows"><tr><td colspan="8">Loading reservations…</td></tr></tbody>
+                    </table></div>
+                    <div class="pagination"><p id="bookingCount"></p><div><button id="previousPage" class="page-button" type="button" aria-label="Previous page">‹</button><span id="pageIndicator"></span><button id="nextPage" class="page-button" type="button" aria-label="Next page">›</button></div></div>
+                </section>
+                <section id="peoplePanel" hidden>
+                    <div class="page-heading"><div><h1>People List</h1><p>Verified customer accounts and their reservation counts.</p></div></div>
+                    <div class="table-wrap"><table><caption class="sr-only">Verified customer accounts</caption><thead><tr><th scope="col">Name</th><th scope="col">Email</th><th scope="col">Joined</th><th scope="col">Reservations</th></tr></thead><tbody id="peopleRows"></tbody></table></div>
+                    <div class="pagination"><p id="peopleCount"></p><div><button id="peoplePrevious" class="page-button" type="button" aria-label="Previous people page">‹</button><span id="peoplePage"></span><button id="peopleNext" class="page-button" type="button" aria-label="Next people page">›</button></div></div>
+                </section>
+                <section id="settingsPanel" hidden>
+                    <div class="page-heading"><div><h1>Admin Settings</h1><p>Update your admin password. Other admin sessions will be signed out.</p></div></div>
+                    <form id="passwordForm" class="settings-card">
+                        <label for="currentPassword">Current password</label><input id="currentPassword" type="password" autocomplete="current-password" required>
+                        <label for="newPassword">New password</label><input id="newPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" required>
+                        <label for="repeatPassword">Confirm new password</label><input id="repeatPassword" type="password" autocomplete="new-password" minlength="8" maxlength="72" required>
+                        <button class="button button-dark" type="submit">Change password</button>
+                        <p id="passwordMessage" role="status"></p>
+                    </form>
+                </section>
+            </main>
+        </div>
+    </div>
+    <dialog id="bookingDialog" aria-labelledby="bookingDialogTitle">
+        <div class="dialog-heading"><h2 id="bookingDialogTitle">Reservation details</h2><button id="closeBooking" class="icon-button" type="button" aria-label="Close reservation details">×</button></div>
+        <div id="bookingDetails"></div>
+    </dialog>
+    <script src="utils.js"></script>
+    <script src="api-client.js"></script>
+    <script src="account.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

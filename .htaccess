@@ -1,0 +1,4 @@
+Options -Indexes
+<FilesMatch "^(composer\.(json|lock)|SETUP\.md|CODE-REVIEW\.md|README\.txt|\.env.*|\.gitignore)$">
+    Require all denied
+</FilesMatch>

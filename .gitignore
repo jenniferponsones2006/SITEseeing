@@ -1,0 +1,4 @@
+/private/*
+!/private/.htaccess
+/vendor/
+/backend/config.local.php

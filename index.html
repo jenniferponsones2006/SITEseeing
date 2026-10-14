@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SITEseeing | Explore Manila</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <div class="nav-container">
+
+        <a href="#about" class="brand">
+    <img src="SITEseeing-Logo.png" class="logo" alt="SITEseeing logo">
+   
+    <span>SITEseeing</span>
+</a>
+
+            <nav class="nav-links" id="siteNavigation">
+
+                <a href="#home">Home</a>
+                <a href="#places">Places</a>
+                <a href="#packages">Packages</a>
+                <a href="#about">About</a>
+
+                <button
+                    class="account-btn" id="accountButton"
+                    onclick="openAuthModal()">
+                    Account
+                </button>
+                <button type="button" class="account-logout" id="logoutButton" hidden onclick="SITEseeingAuth.logout()">Log out</button>
+
+            </nav>
+
+            <button
+                class="mobile-menu-btn"
+                type="button" aria-label="Toggle navigation" aria-controls="siteNavigation" aria-expanded="false"
+                onclick="toggleMobileMenu()">
+                ☰
+            </button>
+
+        </div>
+
+    </header>
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero" id="home">
+
+        <div class="hero-overlay">
+
+            <div class="hero-content">
+
+                <p class="hero-small">
+                    Discover the City
+                </p>
+
+                <h1>
+                    Explore Manila with SITEseeing
+                </h1>
+
+                <p class="hero-subtitle">
+                    Discover places, experiences, and tour packages around Manila.
+                </p>
+
+                <a href="#places" class="hero-btn">
+                    Explore Places
+                </a>
+
+            </div>
+
+            <button class="hero-arrow hero-prev" type="button" aria-label="Previous photo">&#10094;</button>
+            <button class="hero-arrow hero-next" type="button" aria-label="Next photo">&#10095;</button>
+            <div class="hero-dots" id="heroDots"></div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         PLACES
+    ========================== -->
+
+    <section class="section" id="places">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                DISCOVER MANILA
+            </span>
+
+            <h2>
+                Tourist Places
+            </h2>
+
+            <p>
+                Explore historical, cultural, natural, and entertaining destinations.
+            </p>
+
+        </div>
+
+        <!-- FILTERS -->
+
+        <div class="filters">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="placeSearch"
+                    placeholder="Search places..."
+                    oninput="renderPlaces()">
+
+            </div>
+
+            <select
+                id="typeFilter"
+                onchange="renderPlaces()">
+
+                <option value="all">
+                    All Types
+                </option>
+
+                <option value="Historical">
+                    Historical
+                </option>
+
+                <option value="Cultural">
+                    Cultural
+                </option>
+
+                <option value="Nature">
+                    Nature
+                </option>
+
+                <option value="Entertainment">
+                    Entertainment
+                </option>
+
+                <option value="Educational">
+                    Educational
+                </option>
+
+                <option value="Leisure">
+                    Leisure
+                </option>
+
+            </select>
+
+            <select
+                id="priceFilter"
+                onchange="renderPlaces()">
+
+                <option value="all">
+                    All Prices
+                </option>
+
+                <option value="free">
+                    Free
+                </option>
+
+                <option value="paid">
+                    Paid
+                </option>
+
+            </select>
+
+        </div>
+
+        <div
+            class="places-grid"
+            id="placesGrid">
+        </div>
+
+    </section>
+
+    <!-- =========================
+         TOUR PACKAGES
+    ========================== -->
+
+    <section
+        class="section packages-section"
+        id="packages">
+
+        <div class="section-heading">
+
+            <span class="section-label">
+                PLAN YOUR TRIP
+            </span>
+
+            <h2>
+                Tour Packages
+            </h2>
+
+            <p>
+                Choose a package that matches your travel style.
+            </p>
+
+        </div>
+
+        <div class="package-filters">
+
+            <button
+                class="package-filter active"
+                onclick="filterPackages('all', this)">
+                All
+            </button>
+
+            <button
+                class="package-filter"
+                onclick="filterPackages('Solo', this)">
+                Solo
+            </button>
+
+            <button
+                class="package-filter"
+                onclick="filterPackages('Family', this)">
+                Family
+            </button>
+
+            <button
+                class="package-filter"
+                onclick="filterPackages('Barkada', this)">
+                Barkada
+            </button>
+
+        </div>
+
+        <div
+            class="packages-grid"
+            id="packagesGrid">
+        </div>
+
+    </section>
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section class="about-section" id="about">
+
+        <div class="about-container">
+
+            <div class="about-text">
+
+                <span class="section-label">
+                    ABOUT SITESEEING
+                </span>
+
+                <h2>
+                    Making Manila Easier to Explore
+                </h2>
+
+                <p>
+                    SITEseeing is a tourism information system created to help
+                    visitors discover destinations, attractions, restaurants,
+                    hotels, transportation options, and tour packages around Manila.
+                </p>
+
+                <p>
+                    There is more to enjoy in the Philippines beyond its famous tourist attractions.
+                     You may discover delicious Filipino food, cozy hotels, exciting shopping areas, 
+                     local products, transportation services, and many other places that can make 
+                     your journey more enjoyable. From tasting local dishes and exploring busy
+                    cities to experiencing peaceful communities and cultural traditions, 
+                    every part of the Philippines can offer a memorable experience.
+
+                    We created this platform to make it easier for travelers to find and explore the 
+                    places they may enjoy. Whether you are a local traveler discovering your own 
+                    country or a visitor experiencing the Philippines for the first time, 
+                    
+                    we hope to help you find new destinations, plan your trip, 
+                    and enjoy the beauty, culture, and experiences that
+                     the Philippines has to offer.
+                </p>
+
+            </div>
+
+            <div class="about-cards">
+
+                <div class="about-card">
+                    <h3>Discover</h3>
+                    <p>Find places and attractions around Manila.</p>
+                </div>
+
+                <div class="about-card">
+                    <h3>Plan</h3>
+                    <p>Choose packages based on your travel style.</p>
+                </div>
+
+                <div class="about-card">
+                    <h3>Connect</h3>
+                    <p>Access tourism information in one platform.</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+            <div>
+
+                <div class="footer-logo">
+                 <span>SITEseeing</span>
+                </div>
+
+                <p>
+                    Explore Manila. Discover more.
+                </p>
+
+            </div>
+
+            <div class="share-area">
+
+                <h3>
+                    Share SITEseeing
+                </h3>
+
+                <div class="share-buttons">
+
+                    <button onclick="shareFacebook()">
+                        Facebook
+                    </button>
+
+                    <button onclick="shareMessenger()">
+                        Messenger
+                    </button>
+
+                    <button onclick="shareTwitter()">
+                        X
+                    </button>
+
+                     <button onclick="shareInstagram()">
+                        Instagram
+                    </button>
+
+                    <button onclick="copyLink()">
+                        Copy Link
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 SITEseeing. All rights reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+    <!-- =========================
+         AUTH MODAL
+    ========================== -->
+
+    <div
+        class="modal"
+        id="authModal">
+
+        <div class="modal-content auth-modal" role="dialog" aria-modal="true" aria-label="Account">
+
+            <button
+                class="close-btn" type="button" aria-label="Close sign-in window"
+                onclick="closeModal('authModal')">
+                ×
+            </button>
+
+            <div class="auth-header">
+
+                <h2>
+                    Welcome to SITEseeing
+                </h2>
+
+                <p>
+                    Login or create your account to continue.
+                </p>
+
+            </div>
+
+            <div class="auth-tabs" id="authTabs" role="group" aria-label="Account access">
+
+                <button
+                    id="loginTab" type="button" aria-pressed="true"
+                    class="auth-tab active"
+                    onclick="showAuthTab('login')">
+                    Log In
+                </button>
+
+                <button
+                    id="signupTab" type="button" aria-pressed="false"
+                    class="auth-tab"
+                    onclick="showAuthTab('signup')">
+                    Sign Up
+                </button>
+
+                <button type="button" id="adminTab" aria-pressed="false" class="auth-tab" onclick="showAuthTab('admin')">Admin</button>
+            </div>
+            <p id="authStatus" class="auth-status" role="status" aria-live="polite"></p>
+
+            <!-- LOGIN -->
+
+            <form
+                id="loginForm"
+                class="auth-form">
+
+                <div class="form-group">
+
+                    <label for="loginEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="loginPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="loginPassword" autocomplete="current-password"
+                        required>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    Log In
+
+                </button>
+
+            </form>
+
+            <!-- SIGN UP -->
+
+            <form
+                id="signupForm"
+                class="auth-form hidden">
+
+                <div class="form-group">
+
+                    <label for="signupName">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="signupName"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="signupEmail">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="signupEmail"
+                        required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="signupPassword">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="signupPassword" minlength="8" maxlength="72" autocomplete="new-password"
+                        required>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="primary-btn">
+
+                    Send Verification Code
+
+                </button>
+
+            </form>
+
+
+            <form id="verifyForm" class="auth-form hidden">
+                <h3>Verify your email</h3>
+                <p>Enter the code sent to <span id="verificationEmail"></span>. It expires in 10 minutes.</p>
+                <div class="form-group"><label for="verifyCode">Six-digit code</label>
+                    <input id="verifyCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" required>
+                </div>
+                <button type="submit" class="primary-btn">Verify & Sign In</button>
+                <button type="button" class="auth-secondary" id="resendCode">Resend code</button>
+                <button type="button" class="auth-secondary" onclick="showAuthTab('signup')">Start signup again</button>
+            </form>
+            <form id="adminForm" class="auth-form hidden">
+                <div class="form-group"><label for="adminUsername">Admin username</label>
+                    <input id="adminUsername" autocomplete="username" value="admin" required>
+                </div>
+                <div class="form-group"><label for="adminPassword">Admin password</label>
+                    <input id="adminPassword" type="password" autocomplete="current-password" required>
+                </div>
+                <button type="submit" class="primary-btn">Sign In as Admin</button>
+            </form>
+
+        </div>
+
+    </div>
+
+    <div class="modal" id="accountModal">
+        <div class="modal-content auth-modal" role="dialog" aria-modal="true" aria-label="Account">
+            <button type="button" class="close-btn" aria-label="Close account" onclick="closeModal('accountModal')">×</button>
+            <h2 id="signedInName"></h2><p id="accountEmail"></p>
+            <h3 class="account-bookings-heading">Your reservations</h3>
+            <div id="myBookings" aria-live="polite"></div>
+            <button type="button" class="primary-btn" onclick="SITEseeingAuth.logout()">Log out</button>
+        </div>
+    </div>
+
+    <!-- =========================
+         PLACE DETAILS
+    ========================== -->
+
+    <div
+        class="modal"
+        id="placeModal">
+
+        <div class="modal-content large-modal details-modal-content" role="dialog" aria-modal="true" aria-label="Tourist place details">
+            <div class="details-modal-header">
+                <span>Place details</span>
+                <button type="button" class="close-btn details-close-btn"
+                    aria-label="Close place details" title="Close (Escape)"
+                    onclick="closeModal('placeModal')">×</button>
+            </div>
+            <div id="placeDetailsContent" class="details-modal-body"></div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         PACKAGE DETAILS
+    ========================== -->
+
+    <div
+        class="modal"
+        id="packageModal">
+
+        <div class="modal-content large-modal details-modal-content" role="dialog" aria-modal="true" aria-label="Tour package details">
+            <div class="details-modal-header">
+                <span>Package details</span>
+                <button type="button" class="close-btn details-close-btn"
+                    aria-label="Close package details" title="Close (Escape)"
+                    onclick="closeModal('packageModal')">×</button>
+            </div>
+            <div id="packageDetailsContent" class="details-modal-body"></div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         RESERVATION
+    ========================== -->
+
+    <div
+        class="modal"
+        id="reservationModal">
+
+        <div class="modal-content reservation-modal">
+
+            <button
+                class="close-btn"
+                onclick="closeModal('reservationModal')">
+                ×
+            </button>
+
+            <div id="reservationContent"></div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         PAYMENT REVIEW
+    ========================== -->
+
+    <div
+        class="modal"
+        id="paymentModal">
+
+        <div class="modal-content reservation-modal">
+
+            <button
+                class="close-btn"
+                onclick="closeModal('paymentModal')">
+                ×
+            </button>
+
+            <div id="paymentContent"></div>
+
+        </div>
+
+    </div>
+
+    <!-- =========================
+         SUCCESS
+    ========================== -->
+
+    <div
+        class="modal"
+        id="successModal">
+
+        <div class="modal-content reservation-modal">
+
+            <div id="successContent"></div>
+
+        </div>
+
+    </div>
+
+    <!-- TOAST -->
+
+    <div
+        class="toast"
+        id="toast">
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="packages.js"></script>
+<script src="site-data.js"></script>
+    <script src="preview-config.js"></script>
+    <script src="place-previews.js"></script>
+    <script src="place-ratings.js"></script>
+    <script src="api-client.js"></script>
+<script src="account.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
